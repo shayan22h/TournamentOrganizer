@@ -16,11 +16,83 @@ export default function Login() {
   }
 
   return (
-    <>
-      <h1>Login</h1>
-      <input placeholder="username" onChange={e => setUsername(e.target.value)} />
-      <input type="password" placeholder="password" onChange={e => setPassword(e.target.value)} />
-      <button onClick={handleLogin}>Login</button>
+    <div
+      style={{
+        display: "grid",
+        placeItems: "center",
+        minHeight: "100vh",
+        padding: "20px",
+        color: "rgb(0, 0, 0)",
+        backgroundColor: "rgba(0, 0, 0, 0)",
+        font: '400 16px "Times New Roman"',
+        marginBottom: "77px",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "16px",
+          width: "100%",
+          maxWidth: "400px",
+        }}
+      >
+        <h1
+          style={{
+            fontSize: "32px",
+            fontWeight: "700",
+            margin: "0 0 16px 0",
+          }}
+        >
+          Login
+        </h1>
+        <input
+          placeholder="username"
+          onChange={e => setUsername(e.target.value)}
+          style={{
+            width: "100%",
+            display: "inline-block",
+            borderColor: "rgb(118, 118, 118)",
+            font: "400 13px Arial",
+            padding: "8px 12px",
+            border: "1px solid rgb(118, 118, 118)",
+            borderRadius: "4px",
+            boxSizing: "border-box",
+          }}
+        />
+        <input
+          type="password"
+          placeholder="password"
+          onChange={e => setPassword(e.target.value)}
+          style={{
+            width: "100%",
+            display: "inline-block",
+            borderColor: "rgb(118, 118, 118)",
+            font: "400 13px Arial",
+            padding: "8px 12px",
+            border: "1px solid rgb(118, 118, 118)",
+            borderRadius: "4px",
+            boxSizing: "border-box",
+          }}
+        />
+        <button
+          onClick={handleLogin}
+          style={{
+            width: "100%",
+            display: "inline-block",
+            borderColor: "rgb(0, 0, 0)",
+            backgroundColor: "rgba(0, 0, 0, 0)",
+            font: "400 13px Arial",
+            padding: "10px 16px",
+            border: "1px solid rgb(0, 0, 0)",
+            borderRadius: "4px",
+            cursor: "pointer",
+          }}
+        >
+          Login
+        </button>
+      </div>
       <div
         style={{
           display: "flex",
@@ -32,6 +104,6 @@ export default function Login() {
       >
         Enter some text...
       </div>
-    </>
+    </div>
   );
 }
