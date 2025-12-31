@@ -21,6 +21,17 @@ export default function Login() {
       <input placeholder="username" onChange={e => setUsername(e.target.value)} />
       <input type="password" placeholder="password" onChange={e => setPassword(e.target.value)} />
       <button onClick={handleLogin}>Login</button>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          position: "relative",
+          marginTop: "20px",
+          height: "auto",
+        }}
+      >
+        Enter some text...
+      </div>
     </>
   );
 }
