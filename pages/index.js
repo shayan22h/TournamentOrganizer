@@ -1,19 +1,22 @@
 import { useState } from "react";
 
 export default function Login() {
-  const [username, setUsername] = useState("");
+  const [email, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  async function handleLogin() {
-    const res = await fetch("/api/auth", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password, action: "login" }),
-    });
+    async function handleLogin(email, password) {
+        const res = await fetch("http://localhost:8000/auth/login", {
+            method: "POST",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: email,
+              password: password
+          }),
+        });
 
-    const data = await res.json();
-    alert(data.message);
-  }
+        if (!res.ok) throw new Error("Login failed");
+    }
 
   return (
     <div
@@ -125,7 +128,7 @@ export default function Login() {
         />
 
         <button
-          onClick={handleLogin}
+          onClick={() => handleLogin(email, password)}
           style={{
             width: "100%",
             padding: "12px 24px",

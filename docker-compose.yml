@@ -1,9 +1,19 @@
 version: "3.9"
 
 services:
-  web:
+  frontend:
     build: .
     ports:
       - "3000:3000"
     environment:
       - NODE_ENV=development
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend   # folder where backend Dockerfile lives
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: sqlite:///./dev.db
