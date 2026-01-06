@@ -9,7 +9,7 @@ export default function CreateUser() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  async function handleCreateUser(name, email) {
+  async function handleCreateUser(name, username, password, email) {
     setLoading(true);
     setError("");
     try {
@@ -18,7 +18,9 @@ export default function CreateUser() {
         credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: name,
+          fullName: name,
+          username: username,
+          password: password,
           email: email,
         }),
       });
