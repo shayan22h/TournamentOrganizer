@@ -198,25 +198,24 @@ export default function CreateUser() {
             margin: "0",
           }}>
             Already have an account?{" "}
-            <Link href="/">
-              <a
-                style={{
-                  color: "rgba(0, 212, 255, 0.8)",
-                  textDecoration: "none",
-                  transition: "all 0.3s ease",
-                  cursor: "pointer",
-                }}
-                onMouseEnter={e => {
-                  e.target.style.color = "rgba(0, 212, 255, 1)";
-                  e.target.style.textDecoration = "underline";
-                }}
-                onMouseLeave={e => {
-                  e.target.style.color = "rgba(0, 212, 255, 0.8)";
-                  e.target.style.textDecoration = "none";
-                }}
-              >
-                Sign in
-              </a>
+            <Link
+              href="/"
+              style={{
+                color: "rgba(0, 212, 255, 0.8)",
+                textDecoration: "none",
+                transition: "all 0.3s ease",
+                cursor: "pointer",
+              }}
+              onMouseEnter={e => {
+                e.target.style.color = "rgba(0, 212, 255, 1)";
+                e.target.style.textDecoration = "underline";
+              }}
+              onMouseLeave={e => {
+                e.target.style.color = "rgba(0, 212, 255, 0.8)";
+                e.target.style.textDecoration = "none";
+              }}
+            >
+              Sign in
             </Link>
           </p>
         </div>
