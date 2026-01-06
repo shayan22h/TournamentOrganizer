@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Link from "next/link";
 
 export default function Login() {
   const [email, setUsername] = useState("");
@@ -164,8 +165,8 @@ export default function Login() {
             borderTop: "1px solid rgba(255, 255, 255, 0.1)",
           }}
         >
-          <a
-            href="#"
+          <Link
+            href="/create-user"
             style={{
               fontSize: "13px",
               color: "rgba(0, 212, 255, 0.8)",
@@ -183,7 +184,7 @@ export default function Login() {
             }}
           >
             Create new user
-          </a>
+          </Link>
           <a
             href="#"
             style={{
