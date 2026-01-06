@@ -165,26 +165,25 @@ export default function Login() {
             borderTop: "1px solid rgba(255, 255, 255, 0.1)",
           }}
         >
-          <Link href="/create-user">
-            <a
-              style={{
-                fontSize: "13px",
-                color: "rgba(0, 212, 255, 0.8)",
-                textDecoration: "none",
-                transition: "all 0.3s ease",
-                cursor: "pointer",
-              }}
-              onMouseEnter={e => {
-                e.target.style.color = "rgba(0, 212, 255, 1)";
-                e.target.style.textDecoration = "underline";
-              }}
-              onMouseLeave={e => {
-                e.target.style.color = "rgba(0, 212, 255, 0.8)";
-                e.target.style.textDecoration = "none";
-              }}
-            >
-              Create new user
-            </a>
+          <Link
+            href="/create-user"
+            style={{
+              fontSize: "13px",
+              color: "rgba(0, 212, 255, 0.8)",
+              textDecoration: "none",
+              transition: "all 0.3s ease",
+              cursor: "pointer",
+            }}
+            onMouseEnter={e => {
+              e.target.style.color = "rgba(0, 212, 255, 1)";
+              e.target.style.textDecoration = "underline";
+            }}
+            onMouseLeave={e => {
+              e.target.style.color = "rgba(0, 212, 255, 0.8)";
+              e.target.style.textDecoration = "none";
+            }}
+          >
+            Create new user
           </Link>
           <a
             href="#"
