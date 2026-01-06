@@ -211,7 +211,7 @@ export default function CreateUser() {
         )}
 
         <button
-          onClick={() => handleCreateUser(name, email)}
+          onClick={() => handleCreateUser(name, username, password, email)}
           disabled={loading}
           style={{
             width: "100%",
