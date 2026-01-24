@@ -4,20 +4,41 @@ import Link from "next/link";
 export default function Login() {
   const [email, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState(null);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-    async function handleLogin(email, password) {
-        const res = await fetch("http://localhost:8000/auth/login", {
-            method: "POST",
-            credentials: "include",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              email: email,
-              password: password
-          }),
-        });
+async function handleLogin(email, password) {
+  let res;
+  try {
+    res = await fetch("http://localhost:8000/auth/login", {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+  } catch (e) {
+    // Network error / backend down
+    // TODO: show a friendly message in your UI
+    // e.g. setLoginError("Cannot reach server. Please try again.");
+    return { ok: false, message: "Cannot reach server. Please try again." };
+  }
 
-        if (!res.ok) throw new Error("Login failed");
-    }
+  // Try to parse JSON (FastAPI HTTPException returns { detail: "..." })
+  const data = await res.json().catch(() => ({}));
+
+  if (res.status === 401) {
+    // Expected: invalid credentials
+    return { ok: false, message: data.detail || "Invalid credentials" };
+  }
+
+  if (!res.ok) {
+    // Unexpected errors (400/422/500/etc.)
+    return { ok: false, message: data.detail || "Login failed. Please try again." };
+  }
+
+  // Success
+  return { ok: true, data };
+}
 
   return (
     <div
@@ -128,33 +149,56 @@ export default function Login() {
           }}
         />
 
-        <button
-          onClick={() => handleLogin(email, password)}
-          style={{
-            width: "100%",
-            padding: "12px 24px",
-            font: "16px Segoe UI, -apple-system, sans-serif",
-            fontWeight: "600",
-            background: "linear-gradient(135deg, #00d4ff 0%, #0099ff 100%)",
-            color: "#1a1a2e",
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer",
-            transition: "all 0.3s ease",
-            marginTop: "8px",
-          }}
-          onMouseEnter={e => {
-            e.target.style.transform = "translateY(-2px)";
-            e.target.style.boxShadow = "0 8px 24px rgba(0, 212, 255, 0.4)";
-          }}
-          onMouseLeave={e => {
-            e.target.style.transform = "translateY(0)";
-            e.target.style.boxShadow = "none";
-          }}
-        >
-          Sign In
-        </button>
+    <button
+      onClick={async () => {
+        setIsLoggingIn(true);
+        setLoginError(null);
 
+        const result = await handleLogin(email, password);
+
+        setIsLoggingIn(false);
+
+        if (!result.ok) {
+          setLoginError(result.message);   // ✅ shows “Invalid credentials” for 401
+          return;
+        }
+
+        // ✅ success: do whatever you normally do here
+        // e.g. navigate, close modal, store token, etc.
+        // localStorage.setItem("token", result.data.access_token);
+      }}
+      disabled={isLoggingIn}
+      style={{
+        width: "100%",
+        padding: "12px 24px",
+        font: "16px Segoe UI, -apple-system, sans-serif",
+        fontWeight: "600",
+        background: "linear-gradient(135deg, #00d4ff 0%, #0099ff 100%)",
+        color: "#1a1a2e",
+        border: "none",
+        borderRadius: "8px",
+        cursor: isLoggingIn ? "not-allowed" : "pointer",
+        opacity: isLoggingIn ? 0.7 : 1,
+        transition: "all 0.3s ease",
+        marginTop: "8px",
+      }}
+      onMouseEnter={e => {
+        if (isLoggingIn) return;
+        e.target.style.transform = "translateY(-2px)";
+        e.target.style.boxShadow = "0 8px 24px rgba(0, 212, 255, 0.4)";
+      }}
+      onMouseLeave={e => {
+        e.target.style.transform = "translateY(0)";
+        e.target.style.boxShadow = "none";
+      }}
+    >
+      {isLoggingIn ? "Signing In..." : "Sign In"}
+    </button>
+    {loginError && (
+    <div style={{ marginTop: "10px", color: "#ff6b6b", fontSize: "14px" }}>
+      {loginError}
+    </div>
+    )}
         <div
           style={{
             display: "flex",
