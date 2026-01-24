@@ -1,25 +1,25 @@
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function Login() {
-  const [email, setUsername] = useState("");
+  const router = useRouter();
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState(null);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-async function handleLogin(email, password) {
+async function handleLogin(username, password) {
   let res;
   try {
     res = await fetch("http://localhost:8000/auth/login", {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ username, password }),
     });
   } catch (e) {
     // Network error / backend down
-    // TODO: show a friendly message in your UI
-    // e.g. setLoginError("Cannot reach server. Please try again.");
     return { ok: false, message: "Cannot reach server. Please try again." };
   }
 
@@ -154,18 +154,19 @@ async function handleLogin(email, password) {
         setIsLoggingIn(true);
         setLoginError(null);
 
-        const result = await handleLogin(email, password);
+        //const result = await handleLogin(email, password);
+
+        const result = await handleLogin(username, password);
 
         setIsLoggingIn(false);
 
         if (!result.ok) {
-          setLoginError(result.message);   // ✅ shows “Invalid credentials” for 401
+          setLoginError(result.message);
           return;
         }
 
-        // ✅ success: do whatever you normally do here
-        // e.g. navigate, close modal, store token, etc.
-        // localStorage.setItem("token", result.data.access_token);
+        // Success: redirect to template page with username
+        router.push(`/template?username=${encodeURIComponent(result.data.username)}`);
       }}
       disabled={isLoggingIn}
       style={{

@@ -15,8 +15,8 @@ def login(
     response: Response,
     db: Session = Depends(get_db)
 ):
-    logging.info("Login attempt for user: %s", data.email)
-    user = authenticate_user(db, data.email, data.password)
+    logging.info("Login attempt for user: %s", data.username)
+    user = authenticate_user(db, data.username, data.password)
     if not user:
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
@@ -30,7 +30,7 @@ def login(
         samesite="lax"
     )
 
-    return {"status": "ok"}
+    return {"status": "ok", "username": user.username}
 
 
 @router.post("/register")
