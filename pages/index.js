@@ -12,7 +12,7 @@ export default function Login() {
 async function handleLogin(username, password) {
   let res;
   try {
-    res = await fetch("http://localhost:8000/auth/login", {
+    res = await fetch("/api/auth/login", {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
